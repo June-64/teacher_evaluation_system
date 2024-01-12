@@ -1,0 +1,26 @@
+.cl-footer {
+	padding-bottom: env(safe-area-inset-bottom);
+	width: 100%;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	z-index: 99;
+
+	&__placeholder {
+		transition: height 0.3s;
+	}
+
+	&__inner {
+		:deep(cl-button) {
+			width: 100%;
+		}
+
+		&.is-flex {
+			display: flex;
+		}
+	}
+
+	&.is-border {
+		border-top: $cl-border-width solid $cl-color-bg;
+	}
+}

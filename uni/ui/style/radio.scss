@@ -1,0 +1,107 @@
+.cl-radio {
+	display: inline-flex;
+	align-items: center;
+	margin-right: 60rpx;
+	white-space: nowrap;
+	font-size: 28rpx;
+	height: $cl-height;
+
+	&__input {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		box-sizing: border-box;
+		position: relative;
+		background-color: #fff;
+		border: $cl-border-width solid $cl-border-color;
+		height: $cl-checkbox-size;
+		width: $cl-checkbox-size;
+		border-radius: $cl-checkbox-size;
+
+		text {
+			display: inline-block;
+			position: absolute;
+			border-radius: 20rpx;
+			height: 14rpx;
+			width: 14rpx;
+		}
+	}
+
+	&__label {
+		display: inline;
+		margin-left: 16rpx;
+		flex: 1;
+		line-height: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&.is-checked {
+		.cl-radio__input {
+			background-color: $cl-color-primary;
+			border: $cl-color-primary;
+
+			text {
+				background-color: #fff;
+			}
+		}
+	}
+
+	&.is-disabled {
+		.cl-radio__input {
+			background-color: $cl-color-disabled-bg;
+			color: $cl-color-disabled;
+
+			text {
+				background-color: $cl-color-disabled;
+			}
+		}
+
+		.cl-radio__label {
+			color: $cl-color-disabled;
+		}
+	}
+
+	&.is-border {
+		border-radius: 10rpx;
+		padding: 0 20rpx;
+		margin: 0 20rpx 20rpx 0;
+		border: $cl-border-width solid $cl-border-color;
+		box-sizing: border-box;
+		line-height: normal;
+
+		.cl-radio__label {
+			margin-left: 16rpx;
+		}
+
+		&.is-checked {
+			border-color: $cl-color-primary;
+			color: $cl-color-primary;
+		}
+	}
+
+	&.is-fill {
+		justify-content: center;
+		width: 100%;
+
+		.cl-radio__label {
+			text-align: right;
+		}
+	}
+}
+
+/* #ifdef MP */
+cl-radio {
+	display: inline-flex;
+}
+
+.cl-radio-group {
+	&.is-fill {
+		cl-radio {
+			display: inline;
+		}
+	}
+}
+/* #endif */

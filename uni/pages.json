@@ -1,0 +1,88 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/home",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/index/my",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "enablePullDownRefresh": true
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages/user",
+      "pages": [
+        {
+          "path": "doc",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "set",
+          "style": {
+            "navigationBarTitleText": "设置"
+          }
+        },
+        {
+          "path": "edit",
+          "style": {
+            "navigationBarTitleText": "编辑"
+          }
+        },
+        {
+          "path": "login",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "captcha",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "about",
+          "style": {
+            "navigationBarTitleText": "关于我们"
+          }
+        }
+      ]
+    }
+  ],
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^cl-(.*)": "/@/ui/components/cl-$1/cl-$1.vue"
+    }
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "cool-uni",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f6f7fa"
+  },
+  "tabBar": {
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/home",
+        "iconPath": "static/icon/tabbar/home.png",
+        "selectedIconPath": "static/icon/tabbar/home2.png"
+      },
+      {
+        "pagePath": "pages/index/my",
+        "iconPath": "static/icon/tabbar/my.png",
+        "selectedIconPath": "static/icon/tabbar/my2.png"
+      }
+    ]
+  }
+}

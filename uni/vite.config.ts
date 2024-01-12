@@ -3,8 +3,8 @@ import type { UserConfig } from "vite";
 //@ts-ignore
 import uni from "@dcloudio/vite-plugin-uni"; // ！此依赖不能安装
 import { cool } from "./build/cool";
-import { proxy } from "/@/config";
-import postcssConfig from './postcss.config'
+import { proxy } from "./config/proxy";
+
 function resolve(dir: string) {
 	return path.resolve(__dirname, dir);
 }
@@ -13,9 +13,6 @@ function resolve(dir: string) {
 
 export default (): UserConfig => {
 	return {
-		css: {
-			postcss: postcssConfig,
-		},
 		plugins: [uni(), cool()],
 		server: {
 			port: 9900,

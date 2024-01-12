@@ -19,4 +19,5 @@ export default {
 <style lang="scss">
 @import "/@/ui/index.scss";
 @import "/@/static/index.scss";
+@import "/@/styles/tailwind.css";
 </style>

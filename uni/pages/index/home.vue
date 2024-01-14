@@ -1,7 +1,7 @@
 <template>
   <cl-page status-bar-background="transparent">
     <view class="main-container">
-      <view class="teacher ">
+      <view class="teacher" @tap="toTeacher">
         我是老师
       </view>
       <view class="student">
@@ -20,6 +20,10 @@ import Tabbar from "./components/tabbar.vue";
 const {router, service} = useCool();
 const ui = useUi();
 const app = useApp();
+
+const toTeacher = () => {
+  router.push("/pages/teacher/bind");
+};
 
 </script>
 

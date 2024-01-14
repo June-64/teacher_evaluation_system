@@ -13,6 +13,7 @@
         "enablePullDownRefresh": true
       }
     }
+
   ],
   "subPackages": [
     {
@@ -52,6 +53,16 @@
           "path": "about",
           "style": {
             "navigationBarTitleText": "关于我们"
+          }
+        }
+      ]
+    },{
+      "root": "pages/teacher",
+      "pages": [
+        {
+          "path": "bind",
+          "style": {
+            "navigationBarTitleText": "绑定信息"
           }
         }
       ]

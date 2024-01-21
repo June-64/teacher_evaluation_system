@@ -23,9 +23,9 @@
         <cl-list :radius="16">
           <cl-list-item label="我的发布" @tap="toDev"/>
           <cl-list-item label="我的填写" @tap="toDev"/>
-          <cl-list-item label="我的钱包" :arrow-icon="false">
-            <cl-text type="price" :value="59.05"/>
-          </cl-list-item>
+<!--          <cl-list-item label="我的钱包" :arrow-icon="false">-->
+<!--            <cl-text type="price" :value="59.05"/>-->
+<!--          </cl-list-item>-->
         </cl-list>
 
         <cl-list :radius="16">

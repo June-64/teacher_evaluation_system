@@ -13,7 +13,6 @@
         "enablePullDownRefresh": true
       }
     }
-
   ],
   "subPackages": [
     {
@@ -56,13 +55,79 @@
           }
         }
       ]
-    },{
+    },
+    {
       "root": "pages/teacher",
       "pages": [
         {
           "path": "bind",
           "style": {
             "navigationBarTitleText": "绑定信息"
+          }
+        },
+        {
+          "path": "publish",
+          "style": {
+            "navigationBarTitleText": "发布评价"
+          }
+        },
+        {
+          "path": "select_class",
+          "style": {
+            "navigationBarTitleText": "选择班级"
+          }
+        },
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "教师"
+          }
+        },
+        {
+          "path": "list",
+          "style": {
+            "navigationBarTitleText": "评价列表"
+          }
+        },
+        {
+          "path": "edit",
+          "style": {
+            "navigationBarTitleText": "编辑评价"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/student",
+      "pages": [
+        {
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "学生"
+          }
+        },
+        {
+          "path": "bind",
+          "style": {
+            "navigationBarTitleText": "绑定信息"
+          }
+        },
+        {
+          "path": "details",
+          "style": {
+            "navigationBarTitleText": "评价详情"
+          }
+        },
+        {
+          "path": "list",
+          "style": {
+            "navigationBarTitleText": "评价列表"
+          }
+        },
+        {
+          "path": "class",
+          "style": {
+            "navigationBarTitleText": "班级"
           }
         }
       ]

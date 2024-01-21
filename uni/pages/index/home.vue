@@ -4,7 +4,7 @@
       <view class="teacher" @tap="toTeacher">
         我是老师
       </view>
-      <view class="student">
+      <view class="student" @tap="toStudent">
         我是学生
       </view>
     </view>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import {useApp, useCool} from "/@/cool";
+import {storage, useApp, useCool} from "/@/cool";
 import {useUi} from "/@/ui";
 import Tabbar from "./components/tabbar.vue";
 
@@ -22,9 +22,21 @@ const ui = useUi();
 const app = useApp();
 
 const toTeacher = () => {
-  router.push("/pages/teacher/bind");
+  service.user.teacher.checkTeacher().then(res => {
+    storage.set("teacher", JSON.stringify(res));
+    router.push("/pages/teacher/index");
+  }).catch(err => {
+    router.push("/pages/teacher/bind");
+  })
 };
-
+const toStudent = () => {
+  service.user.student.checkStudent().then(res => {
+    storage.set("student", JSON.stringify(res));
+    router.push("/pages/student/index");
+  }).catch(err => {
+    router.push("/pages/student/bind");
+  })
+}
 </script>
 
 <style lang="scss" scoped>

@@ -2,20 +2,21 @@
 
   <cl-page :padding="20">
     <view class="is-flex item-center ym-md">
-      <text class="title xm-xs">教师姓名:</text>
-      <cl-input v-model="form.name" class="flex1"/>
+      <text class="title xm-xs">姓名:</text>
+      <cl-input v-model="form.studentName" class="flex1"/>
     </view>
     <view class="is-flex item-center ym-md">
-      <text class="title xm-xs">教师职称:</text>
-      <cl-input v-model="form.teacherTitle" class="flex1"/>
+      <text class="title xm-xs">学号:</text>
+      <cl-input v-model="form.studentNo" class="flex1"/>
     </view>
     <view class="is-flex item-center ym-md">
-      <text class="title xm-xs">所属学院:</text>
-      <cl-select :defaultFirstOption="false" :options="dict.get('college_info')" v-model="form.collegeID"
+      <text class="title xm-xs">性别:</text>
+      <cl-select :defaultFirstOption="false" :options="[{label:'男',value:'男'},{label:'女',value:'女'}]"
+                 v-model="form.studentSex"
                  class="flex1"/>
     </view>
     <view class="is-flex item-center ym-md">
-      <text class="title xm-xs">教学班级:</text>
+      <text class="title xm-xs">所在班级:</text>
       <view class="flex1 is-border h" @tap="toSelectClass">
         <cl-tag closable @close="delClass(item)" v-for="item in form.class" :key="item.id">
           {{ item.grade + item.collegeName }}
@@ -39,9 +40,9 @@ const {cinfo} = useStore();
 const ui = useUi()
 
 const form = reactive({
-  name: "",
-  teacherTitle: "",
-  collegeID: "",
+  studentName: "",
+  studentNo: "",
+  studentSex: "",
   class: cinfo.currentClass,
 });
 
@@ -52,19 +53,24 @@ const delClass = (item) => {
 
 const bind = () => {
   console.log(form.class.map(item => item.id))
-  service.user.teacher.bindTeacher({
-    teacherName: form.name,
-    collegeID: form.collegeID,
-    teacherTitle: form.teacherTitle,
-    classIDs: form.class.map(item => item.id).join(",")
-  }).then(res => {
-    router.push("/pages/teacher/home")
+  const data = {
+    ...form,
+    classID:form.class[0].id
+  }
+  service.user.student.bindStudent(data).then(res => {
+    ui.showToast("绑定成功")
+    router.push("/pages/student/index")
   }).catch(err => {
     ui.showToast(err.message)
   })
 }
 const toSelectClass = () => {
-  router.push("/pages/teacher/select_class");
+  router.push({
+    path: "/pages/teacher/select_class",
+    query: {
+      type: "single"
+    }
+  });
 };
 
 </script>

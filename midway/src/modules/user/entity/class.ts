@@ -1,14 +1,19 @@
 import { BaseEntity } from '@cool-midway/core';
-import { Column, Index, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 /**
  * 班级信息
  */
 @Entity('class_info')
 export class ClassInfoEntity extends BaseEntity {
-  @Index()
-  @Column({ comment: '班级ID', nullable: true, type: 'bigint' })
-  classID: number;
+  @Column({
+    comment: '班级ID',
+    nullable: true,
+    type: 'bigint',
+    unique: true,
+    generated: 'increment',
+  })
+  id: number;
 
   @Column({ comment: '年级名称', nullable: true, type: 'varchar' })
   gradeName: string;

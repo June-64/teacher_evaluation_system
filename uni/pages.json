@@ -94,6 +94,24 @@
           "style": {
             "navigationBarTitleText": "编辑评价"
           }
+        },
+        {
+          "path": "details",
+          "style": {
+            "navigationBarTitleText": "评价详情"
+          }
+        },
+        {
+          "path": "class",
+          "style": {
+            "navigationBarTitleText": "班级"
+          }
+        },
+        {
+          "path": "class_details",
+          "style": {
+            "navigationBarTitleText": "班级详情"
+          }
         }
       ]
     },
@@ -141,7 +159,7 @@
   },
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "cool-uni",
+    "navigationBarTitleText": "教师评价小程序",
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#f6f7fa"
   },

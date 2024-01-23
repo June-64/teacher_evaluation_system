@@ -6,7 +6,7 @@
       }},{{ dict.getLabel("college_info", teacher.collegeID) }}
     </view>
     <cl-list>
-      <cl-list-item label="我的班级" icon="el-icon-s-order" @tap="toDev"/>
+      <cl-list-item label="我的班级" icon="el-icon-s-order" @tap="router.push('/pages/teacher/class')"/>
       <cl-list-item label="发布评价" icon="el-icon-s-order" @tap="router.push('/pages/teacher/publish')"/>
       <cl-list-item label="评价列表" icon="el-icon-s-order" @tap="router.push('/pages/teacher/list')"/>
     </cl-list>

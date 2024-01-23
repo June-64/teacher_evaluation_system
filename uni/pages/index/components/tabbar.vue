@@ -10,13 +10,13 @@
 				}"
 				@tap="toLink(item.pagePath)"
 			>
-				<view class="custom" v-if="item.pagePath == 'custom'">
-					<view class="icon">
-						<image src="/static/chat.png" mode="aspectFit" />
-					</view>
-				</view>
+<!--				<view class="custom" v-if="item.pagePath == 'custom'">-->
+<!--					<view class="icon">-->
+<!--						<image src="/static/chat.png" mode="aspectFit" />-->
+<!--					</view>-->
+<!--				</view>-->
 
-				<template v-else>
+				<template >
 					<view class="icon">
 						<image :src="item.icon" mode="aspectFit" />
 					</view>

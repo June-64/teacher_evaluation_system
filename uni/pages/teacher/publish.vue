@@ -83,11 +83,11 @@
             <cl-input v-model="form.title"/>
           </template>
         </cl-list-item>
-        <cl-list-item :arrowIcon='false' label="是否匿名">
-          <template #append>
-            <cl-switch v-model="form.anonymous" class="switch"/>
-          </template>
-        </cl-list-item>
+<!--        <cl-list-item :arrowIcon='false' label="是否匿名">-->
+<!--          <template #append>-->
+<!--            <cl-switch v-model="form.anonymous" class="switch"/>-->
+<!--          </template>-->
+<!--        </cl-list-item>-->
         <!--结束时间-->
         <cl-list-item :arrow-icon="false" label="截至时间">
           <picker mode="date" :value="form.endTime" :start="startDate" @change="bindDateChange">

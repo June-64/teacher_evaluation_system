@@ -77,11 +77,20 @@
 .justify-end {
   justify-content: flex-end;
 }
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-start{
+  justify-content: flex-start!important;
+}
 
 .title {
   font-size: 0.8em;
 }
-
+.w100{
+    width: 100%;
+}
 .ym-md {
   margin-top: 30rpx;
   margin-bottom: 30rpx;
@@ -130,4 +139,7 @@
 .ap-xs{
     padding: 10rpx;
 }
-
+.xp-md {
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}

@@ -2,11 +2,11 @@
   <cl-page>
     <view class="ap-xs" style="background:#fff;color: #255ec4;font-size: 30rpx;text-align: end">
       {{
-        studentInfo.studentName + "," + studentInfo.studentNo
+        studentInfo?.studentName + "," + studentInfo?.studentNo
       }}
     </view>
     <cl-list>
-      <cl-list-item label="我的班级" icon="el-icon-s-order" @tap="router.push('/pages/student/class')"/>
+      <cl-list-item label="我的班级" icon="el-icon-s-order" @tap="router.push({path:'/pages/student/class',query:{classID:studentInfo.classID}})"/>
       <cl-list-item label="评价列表" icon="el-icon-s-order" @tap="router.push('/pages/student/list')"/>
     </cl-list>
   </cl-page>

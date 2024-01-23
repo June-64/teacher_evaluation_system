@@ -10,6 +10,8 @@ import {DictInfoEntity} from '../../dict/entity/info';
 import {TeacherClassEntity} from '../entity/teacher_class';
 import {CommentListEntity} from "../entity/comment_list";
 import {CommentInfoEntity} from "../entity/comment_info";
+import {CommentAnswerEntity} from "../entity/comment_answer";
+import {StudentInfoEntity} from "../entity/student";
 
 /**
  * 用户信息
@@ -36,6 +38,12 @@ export class TeacherService extends BaseService {
 
     @InjectEntityModel(CommentInfoEntity)
     commentInfoEntity: Repository<CommentInfoEntity>;
+
+    @InjectEntityModel(CommentAnswerEntity)
+    commentAnswerEntity: Repository<CommentAnswerEntity>;
+
+    @InjectEntityModel(StudentInfoEntity)
+    studentInfoEntity: Repository<StudentInfoEntity>;
 
     @Inject()
     file: CoolFile;
@@ -93,12 +101,17 @@ export class TeacherService extends BaseService {
 
     async getTeacherClass(id: number) {
         const teacherClass = await this.teacherClassEntity.find({where: {userID: id}});
-        const classInfo = teacherClass.map(async item => {
-            return await this.classInfoEntity.find({where: {id: item.classID}});
-        });
+        const classInfo = await Promise.all(teacherClass.map(async item => {
+            // 查询出每个班有多少名学生
+            const studentCount = await this.studentInfoEntity.count({where: {classID: item.classID}});
+            return {
+                ...item,
+                studentCount,
+                ...await this.classInfoEntity.findOneBy({id: item.classID})
+            }
+        }))
         const dict = await this.dictInfoEntity.find();
         return classInfo.map(item => {
-            // @ts-ignore
             const {collegeName, gradeName} = item;
             const college = dict.find(item => item.value == collegeName);
             const grade = dict.find(item => item.value == gradeName);
@@ -112,28 +125,42 @@ export class TeacherService extends BaseService {
 
     async publish(body, id: number) {
         const {title, anonymous, endTime, comments} = body
-        const commentListInfo = await this.commentListEntity.save({
-            teacherID: id,
-            title: title,
-            isAnonymous: anonymous,
-            endTime: endTime,
-            classID: body.class.map(item => item.id).join(',')
-        })
-        for (let item of comments) {
-            const tempData = {
-                commentID: commentListInfo.id,
-                content: item.title,
-                type: item.type,
-                options: JSON.stringify(item.options.filter(Boolean))
+        const teacherInfo = await this.teacherInfoEntity.findOneBy({userID: id})
+        return await Promise.all(body.class.map(async item => {
+            const commentListInfo = await this.commentListEntity.save({
+                teacherID: teacherInfo.id,
+                title: title,
+                isAnonymous: anonymous,
+                endTime: endTime,
+                classID: item.id
+            })
+            for (let item of comments) {
+                const tempData = {
+                    commentID: commentListInfo.id,
+                    content: item.title,
+                    type: item.type,
+                    options: JSON.stringify(item.options.filter(Boolean))
+                }
+                await this.commentInfoEntity.save(tempData)
             }
-            await this.commentInfoEntity.save(tempData)
-        }
-        return commentListInfo
+            return commentListInfo
+        }))
     }
 
     async getCommentList(id: number) {
-        const commentList = await this.commentListEntity.find({where: {teacherID: id}})
-        const commentInfo = commentList.map(async item => await this.commentInfoEntity.find({where: {commentID: item.id}}))
+        const teacherInfo = await this.teacherInfoEntity.findOneBy({userID: id})
+        const commentList = await this.commentListEntity.findBy({teacherID: teacherInfo.id})
+        const commentInfo = await Promise.all(commentList.map(async item => {
+            // 查询当前问卷有多少个用户参与了评价
+            const commentAnswer = await this.commentAnswerEntity.find({where: {commentID: item.id}})
+            // 使用set去重对应的userID
+            const userIDList = [...new Set(commentAnswer.map(item => item.userID))]
+            item['userCount'] = userIDList.length
+            // 根据班级id查询班级信息
+            item['classInfo'] = await this.classInfoEntity.findOneBy({id: item.classID})
+
+            return await this.commentInfoEntity.find({where: {commentID: item.id}})
+        }))
         return commentList.map(item => {
             // @ts-ignore
             const tempCommentInfo = commentInfo.filter(info => info.commentID == item.id)
@@ -148,5 +175,47 @@ export class TeacherService extends BaseService {
                 })
             }
         })
+    }
+
+    async getCommentDetail(commentID: number) {
+        const {isAnonymous} = await this.commentListEntity.findOneBy({id: commentID})
+        const commentInfo = await this.commentInfoEntity.find({where: {commentID: commentID}})
+        return await Promise.all(commentInfo.map(async item => {
+            // 查看每个选项填写的人数
+            item['answerCount'] = await this.commentAnswerEntity.find({where: {optionID: item.id, commentID}})
+            // 使用answerCount的中的answer为key，统计出每个选项的人数
+            item['answerCount'] = item['answerCount'].reduce((prev, cur) => {
+                // 如果当前选项类型是客观题，就跳过
+                const {answer} = cur
+                if (item.type == '3') {
+                    prev[answer]=1
+                }
+                if (prev[answer]) {
+                    prev[answer] += 1
+                } else {
+                    prev[answer] = 1
+                }
+                return prev
+            }, {})
+
+            // 如果不是匿名的话，就把当前回答的人的信息查出来
+            if (!isAnonymous) {
+                const baseOptions = await this.commentAnswerEntity.find({where: {optionID: item.id, commentID}})
+                item['answerList'] = await Promise.all(baseOptions.map(async info => {
+                    const {userID} = info
+                    const userInfo = await this.userInfoEntity.findOneBy({id: userID})
+                    const student = await this.studentInfoEntity.findOneBy({userID})
+                    return {
+                        ...student,
+                        ...info,
+                        ...userInfo
+                    }
+                }))
+            }
+            return {
+                ...item,
+                options: JSON.parse(item.options)
+            }
+        }))
     }
 }

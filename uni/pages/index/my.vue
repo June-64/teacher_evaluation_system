@@ -16,13 +16,13 @@
         </view>
 
         <!-- 简介 -->
-        <view class="desc"> 好用的教师评价系统</view>
+        <view class="desc"> 好用的教师评价小程序</view>
       </view>
 
       <view class="container">
         <cl-list :radius="16">
-          <cl-list-item label="我的发布" @tap="toDev"/>
-          <cl-list-item label="我的填写" @tap="toDev"/>
+          <cl-list-item label="我的发布" @tap="toTeacher"/>
+          <cl-list-item label="我的填写" @tap="toStudent"/>
 <!--          <cl-list-item label="我的钱包" :arrow-icon="false">-->
 <!--            <cl-text type="price" :value="59.05"/>-->
 <!--          </cl-list-item>-->
@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import {onPullDownRefresh, onShow} from "@dcloudio/uni-app";
-import {useCool, useStore} from "/@/cool";
+import {service, storage, useCool, useStore} from "/@/cool";
 import Tabbar from "./components/tabbar.vue";
 import {useUi} from "/@/ui";
 
@@ -48,6 +48,22 @@ const {router} = useCool();
 const {user} = useStore();
 const ui = useUi();
 
+const toTeacher = () => {
+  service.user.teacher.checkTeacher().then(res => {
+    storage.set("teacher", JSON.stringify(res));
+    router.push("/pages/teacher/list");
+  }).catch(err => {
+    router.push("/pages/teacher/bind");
+  })
+};
+const toStudent = () => {
+  service.user.student.checkStudent().then(res => {
+    storage.set("student", JSON.stringify(res));
+    router.push("/pages/student/list");
+  }).catch(err => {
+    router.push("/pages/student/bind");
+  })
+}
 async function refresh() {
   if (user.token) {
     await user.get();

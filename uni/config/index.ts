@@ -8,7 +8,7 @@ export const isDev = import.meta.env.MODE === "development";
 export const config = {
 	// 项目信息
 	app: {
-		name: "COOL-UNI",
+		name: "教师评价小程序",
 		desc: "基于 Ts + Vue3 + Pinia 构建。",
 		// 页面配置
 		pages: {

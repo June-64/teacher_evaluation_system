@@ -58,7 +58,7 @@ const bind = () => {
     teacherTitle: form.teacherTitle,
     classIDs: form.class.map(item => item.id).join(",")
   }).then(res => {
-    router.push("/pages/teacher/home")
+    router.push("/pages/teacher/index")
   }).catch(err => {
     ui.showToast(err.message)
   })

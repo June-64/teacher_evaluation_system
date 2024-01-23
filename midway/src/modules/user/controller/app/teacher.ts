@@ -1,7 +1,7 @@
 import {CoolController, BaseController, CoolUrlTag} from '@cool-midway/core';
-import {Inject, Post} from '@midwayjs/core';
+import {Inject, Post, Query} from '@midwayjs/core';
 import {TeacherService} from '../../service/teacher';
-import {Body} from '@midwayjs/decorator';
+import {Body, Get} from '@midwayjs/decorator';
 
 /**
  * 登录
@@ -50,6 +50,13 @@ export class AppTeacherController extends BaseController {
     @Post("/getCommentList", {summary: "获取评价列表"})
     async getCommentList(@Body() body) {
         const {id} = this.ctx.user;
-        return this.ok(await this.teacherService.getCommentList( id));
+        return this.ok(await this.teacherService.getCommentList(id));
+    }
+
+    @Get("/getCommentDetail", {summary: "获取评价详情"})
+    async getCommentDetail(@Query() body) {
+        const {commentID} = body;
+        return this.ok(await this.teacherService.getCommentDetail(commentID));
     }
 }
+

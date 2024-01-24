@@ -69,8 +69,8 @@ const Table = useTable({
 	columns: [
 		{ type: "selection" },
 		{ prop: "id", label: "ID" },
-		{ prop: "gradeName", label: "年级名称" },
-		{ prop: "collegeName", label: "学院" },
+		{ prop: "gradeName", label: "年级名称", dict: dict.get("grade_info") },
+		{ prop: "collegeName", label: "学院", dict: dict.get("college_info") },
 		{ prop: "majorName", label: "专业名称" },
 		{ prop: "classNum", label: "班级人数" },
 		{ prop: "createTime", label: "创建时间", sortable: "desc", width: 160 },

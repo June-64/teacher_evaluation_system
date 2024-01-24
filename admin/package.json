@@ -1,5 +1,5 @@
 {
-	"name": "cool-admin",
+	"name": "admin",
 	"version": "7.0.0",
 	"scripts": {
 		"dev": "vite --host",

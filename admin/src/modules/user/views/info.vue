@@ -69,8 +69,7 @@ const Table = useTable({
 	columns: [
 		{ type: "selection" },
 		{ prop: "id", label: "ID" },
-		{ prop: "unionid", label: "登录唯一ID" },
-		{ prop: "avatarUrl", label: "头像", component: { name: "cl-link" } },
+		{ prop: "avatarUrl", label: "头像", component: { name: "cl-avatar" } },
 		{ prop: "nickName", label: "昵称" },
 		{ prop: "phone", label: "手机号" },
 		{ prop: "gender", label: "性别" },

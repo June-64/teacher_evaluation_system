@@ -208,20 +208,22 @@ const delClass = (item) => {
   cinfo.currentClass = form.value.class
 }
 const onPublish = () => {
-  if (form.value.title == "") {
-    ui.showToast("请输入标题")
-    return
-  }
-  if (form.value.class.length == 0) {
-    ui.showToast("请选择班级")
-    return
-  }
+
   if (form.value.comments.length == 0) {
     ui.showToast("请添加问题")
     return
   }
+  if (form.value.title == "") {
+    ui.showToast("请输入标题")
+    return
+  }
+
   if (form.value.endTime == "") {
     ui.showToast("请选择截至时间")
+    return
+  }
+  if (form.value.class.length == 0) {
+    ui.showToast("请选择班级")
     return
   }
   // 截至时间必须大于今天

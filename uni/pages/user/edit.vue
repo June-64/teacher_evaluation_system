@@ -11,6 +11,8 @@
 							:height="80"
 							:border-radius="12"
 							placeholder="请输入昵称"
+              @input="nameInput"
+              @blur="nameInput"
 						/>
 					</cl-form-item>
 				</cl-form>
@@ -41,6 +43,9 @@ const form = reactive({
 	nickName: "",
 });
 
+function nameInput(e: any) {
+  form.nickName = e.detail.value
+}
 async function save() {
 	loading.value = true;
 

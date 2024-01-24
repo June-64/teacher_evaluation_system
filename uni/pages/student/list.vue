@@ -14,14 +14,16 @@
         </template>
       </cl-list-item>
     </cl-list>
+    <cl-divider background-color="#f6f7fa">没有更多了</cl-divider>
   </cl-page>
 </template>
 
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import {onLoad} from "@dcloudio/uni-app";
+import {onLoad, onShow} from "@dcloudio/uni-app";
 import {router, service} from "/@/cool";
 import {useUi} from "/@/ui";
+import ClDivider from "/@/ui/components/cl-divider/cl-divider.vue";
 
 const ui = useUi()
 
@@ -43,7 +45,7 @@ const toDetails = (item) => {
   }
   router.push({path: "/pages/student/details", query: {commentID: id}})
 }
-onLoad(() => {
+onShow(() => {
   service.user.student.getQuestionnaire().then(res => {
     commentList.value = res
   })

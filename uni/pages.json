@@ -90,12 +90,6 @@
           }
         },
         {
-          "path": "edit",
-          "style": {
-            "navigationBarTitleText": "编辑评价"
-          }
-        },
-        {
           "path": "details",
           "style": {
             "navigationBarTitleText": "评价详情"

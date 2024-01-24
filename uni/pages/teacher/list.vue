@@ -2,7 +2,7 @@
   <cl-page>
     <view>
       <cl-list>
-        <cl-list-item v-for="item in commentList" :arrow-icon="false" @tap="toCommentDetails(item)">
+        <cl-list-item v-for="item in commentList" :arrow-icon="false" @tap="toCommentDetails(item)" @longpress="delComment(item)">
           <template #default>
             <view class="is-flex flex-column justify-start w100">
               <cl-text :value="item.title"></cl-text>
@@ -27,9 +27,10 @@ import {router, service, useStore} from "/@/cool";
 import {onLoad} from "@dcloudio/uni-app";
 import {computed, ref} from "vue";
 import ClDivider from "/@/ui/components/cl-divider/cl-divider.vue";
+import {useUi} from "/@/ui";
 
 const {dict} = useStore()
-
+const ui=useUi()
 const commentList = ref<any>([])
 
 const isExpired = computed(() => {
@@ -37,6 +38,23 @@ const isExpired = computed(() => {
     return new Date(endTime).getTime() < new Date().getTime()
   }
 })
+
+const delComment=(item)=>{
+  ui.showConfirm({
+    title: '提示',
+    message: '确定删除该评论吗？',
+    callback: (res) => {
+      console.log(res)
+      if (res=='confirm') {
+        service.user.teacher.deleteComment({commentID:item.id}).then(res=>{
+          ui.showToast('删除成功')
+          getList()
+        })
+      }
+    }
+  })
+
+}
 
 const toCommentDetails = (item) => {
   router.push({

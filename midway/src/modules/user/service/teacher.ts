@@ -218,4 +218,12 @@ export class TeacherService extends BaseService {
             }
         }))
     }
+    async deleteComment(commentID: number) {
+        await this.commentListEntity.delete({id: commentID})
+        await this.commentInfoEntity.delete({commentID})
+        await this.commentAnswerEntity.delete({commentID})
+        return {
+            success: true
+        }
+    }
 }

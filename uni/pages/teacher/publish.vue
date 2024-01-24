@@ -83,11 +83,11 @@
             <cl-input v-model="form.title"/>
           </template>
         </cl-list-item>
-<!--        <cl-list-item :arrowIcon='false' label="是否匿名">-->
-<!--          <template #append>-->
-<!--            <cl-switch v-model="form.anonymous" class="switch"/>-->
-<!--          </template>-->
-<!--        </cl-list-item>-->
+        <!--        <cl-list-item :arrowIcon='false' label="是否匿名">-->
+        <!--          <template #append>-->
+        <!--            <cl-switch v-model="form.anonymous" class="switch"/>-->
+        <!--          </template>-->
+        <!--        </cl-list-item>-->
         <!--结束时间-->
         <cl-list-item :arrow-icon="false" label="截至时间">
           <picker mode="date" :value="form.endTime" :start="startDate" @change="bindDateChange">
@@ -208,9 +208,30 @@ const delClass = (item) => {
   cinfo.currentClass = form.value.class
 }
 const onPublish = () => {
+  if (form.value.title == "") {
+    ui.showToast("请输入标题")
+    return
+  }
+  if (form.value.class.length == 0) {
+    ui.showToast("请选择班级")
+    return
+  }
+  if (form.value.comments.length == 0) {
+    ui.showToast("请添加问题")
+    return
+  }
+  if (form.value.endTime == "") {
+    ui.showToast("请选择截至时间")
+    return
+  }
+  // 截至时间必须大于今天
+  if (new Date(form.value.endTime).getTime() < new Date().getTime()) {
+    ui.showToast("截至时间必须大于当前时间")
+    return
+  }
   service.user.teacher.publish(form.value).then(res => {
     ui.showToast("发布成功")
-    // router.back()
+    router.back()
   }).catch(err => {
     ui.showToast(err.message)
   })
